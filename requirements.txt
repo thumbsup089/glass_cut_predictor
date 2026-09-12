@@ -1,0 +1,7 @@
+numpy>=1.26
+scipy>=1.11
+trimesh>=4.0
+svgwrite>=1.4
+rtree>=1.2
+fast-simplification>=0.1.9
+matplotlib>=3.8
