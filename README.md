@@ -3,25 +3,26 @@ Vorhersage Tool für Glaszuschnitte bei Floatglas-Slumping
 
 
 
-Problem 
+Problem: 
 Bei Glasslumping vorherzusagen wie sich ein Glaszuschnitt auf die gewünschte Negativform legt ist extrem Erfahrungsabhängig und Kompliziert vorherzusagen. Besonders Kompliziert ist es da viele Parameter zusammenspielen darunter Glasdicke, Negativform, Temperaturprogramm und reales Materialverhalten. 
 
 
-Projektidee
+Projektidee: 
 Einheitliche Dokumentation der Negativform, des Formzuschnittes, des Materials und der Brennkurve vor dem Brandt und dazu die entstandene Glasgeometrie. Für eine neue Form wird  dann in den Daten abgeglichen wie der Zuschnitt, die Brennkurve und evlt das Material ähnlicher Formen funktioniert hat. (Case-Based Reasoning)
 
 
-Vorhersageansatz:
+Vorhersageansatz: 
 - radialer Zuschnitt aus Negativform bestimmen (geometrische berechnung)
 - Negativform mit Formen im Datensatz abgleichen (mithilfe von Merkmalsvektor)
 - Zuschnitt ähnlicher Formen + radialer Zuschnitt = finale Zuschnitt
 
 Datensatz:
-
 1 Datenpunkt
 - 3d Form / heightmap
 - verwendeter Zuschnitt 
 - Brandergebnis
+
+
 
 
 
