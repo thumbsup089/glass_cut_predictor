@@ -25,8 +25,7 @@ Datensatz:
 
 
 
-<img width="929" height="504" alt="image" src="https://github.com/user-attachments/assets/8879c949-a835-4ce9-a574-1eebadab1fd2" />
-
+<img width="908" height="527" alt="image" src="https://github.com/user-attachments/assets/0b088d8b-5391-4bd8-9aa1-5d4821670db6" />
 
 
 ## Install and run (Windows / Python 3.11)
