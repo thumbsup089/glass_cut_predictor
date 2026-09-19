@@ -19,13 +19,15 @@ from src.marker_detection import (
     save_marker_debug_image,
 )
 
+from src.perspective_calibration import (
+    calibrate_perspective,
+    rectify_image,
+    print_perspective_report,
+)
+
 from src.angle_detection import (
     detect_green_angle,
     save_angle_debug_image,
-)
-
-from src.scale_image import (
-    scale_image_to_pixels_per_mm,
 )
 
 # =========================================================
@@ -179,48 +181,51 @@ save_angle_debug_image(
 print()
 print(f"Angle debug image saved to: " f"{ANGLE_DEBUG_PATH}")
 
-
 # =========================================================
-# 5. PRELIMINARY GLOBAL IMAGE SCALE
-#
-# IMPORTANT:
-# This is currently ONLY a uniform scaling test.
-#
-# Perspective and lens distortion have NOT yet
-# been corrected.
+# 5. PERSPECTIVE CALIBRATION
 # =========================================================
 
-scaled_image, scale_factor = scale_image_to_pixels_per_mm(
-    PHOTO_PATH,
-    markers.magenta_points,
-    markers.cyan_points,
+image = cv2.imread(PHOTO_PATH)
+
+if image is None:
+    raise FileNotFoundError(PHOTO_PATH)
+
+
+perspective = calibrate_perspective(
+    image_shape=image.shape,
+    magenta_points=markers.magenta_points,
+    cyan_points=markers.cyan_points,
+    green_angle=green_angle,
     marker_spacing_mm=MARKER_SPACING_MM,
-    target_pixels_per_mm=TARGET_PIXELS_PER_MM,
 )
 
 
-SCALED_IMAGE_PATH = f"{DEBUG_DIR}/scaled_image.png"
+print_perspective_report(perspective)
+
+
+# =========================================================
+# 6. RECTIFY IMAGE
+# =========================================================
+
+rectified = rectify_image(
+    image,
+    perspective,
+    pixels_per_mm=TARGET_PIXELS_PER_MM,
+    padding_mm=10.0,
+)
+
+
+RECTIFIED_PATH = f"{DEBUG_DIR}/rectified.png"
 
 
 cv2.imwrite(
-    SCALED_IMAGE_PATH,
-    scaled_image,
+    RECTIFIED_PATH,
+    rectified,
 )
 
 
 print()
-print("========================================")
-print("GLOBAL SCALE TEST")
-print("========================================")
-
-
-print(f"Target resolution: " f"{TARGET_PIXELS_PER_MM:.3f} px/mm")
-
-
-print(f"Scale factor: " f"{scale_factor:.6f}")
-
-
-print(f"Scaled image saved to: " f"{SCALED_IMAGE_PATH}")
+print(f"Rectified image saved to: " f"{RECTIFIED_PATH}")
 
 
 # =========================================================
@@ -267,6 +272,3 @@ print()
 print("========================================")
 print("DONE")
 print("========================================")
-
-
-print("Next step: perspective calibration.")
